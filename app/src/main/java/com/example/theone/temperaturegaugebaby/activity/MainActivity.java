@@ -1,54 +1,123 @@
 package com.example.theone.temperaturegaugebaby.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.theone.temperaturegaugebaby.R;
+import com.wangjie.androidbucket.present.ABActionBarActivity;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+
+public class MainActivity extends ABActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener{
+
+
+    //    @Inject
+//    SharedPreferences mPreferences;//全局的SharedPreferences
+    //不能private或者static
+    @Bind(R.id.label_list_sample_rfal)
+    RapidFloatingActionLayout rfaLayout;
+    @Bind(R.id.label_list_sample_rfab)
+    RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
+    private final String KEY = "Dagger 2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //測試額
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //初始化悬浮菜单
+        ininRapidFloatingAction();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void ininRapidFloatingAction() {
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(this);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+//                        .setLabel("Github: wangjiegulu")
+                        .setResId(R.mipmap.ico_test_d)
+                        .setIconNormalColor(Color.parseColor("#FFBBFF"))
+                        .setIconPressedColor(Color.parseColor("#FFBBFF"))
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+//                        .setLabel("tiantian.china.2@gmail.com")
+                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ico_test_c))
+                        .setIconNormalColor(Color.parseColor("#FFBBFF"))
+                        .setIconPressedColor(Color.parseColor("#FFBBFF"))
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(this, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+//                        .setLabel("WangJie")
+                        .setResId(R.mipmap.setting)
+                        .setIconNormalColor(Color.parseColor("#FFBBFF"))
+                        .setIconPressedColor(Color.parseColor("#FFBBFF"))
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        items.add(new RFACLabelItem<Integer>()
+//                        .setLabel("Compose")
+                        .setResId(R.mipmap.help)
+                        .setIconNormalColor(Color.parseColor("#FFBBFF"))
+                        .setIconPressedColor(Color.parseColor("#FFBBFF"))
+                        .setLabelColor(0xff283593)
+                        .setWrapper(3)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(this, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(this, 5))
+        ;
+
+        rfabHelper = new RapidFloatingActionHelper(
+                this,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
+
     }
 
+    /**
+     * 浮窗Label的点击事件
+     *
+     * @param position
+     * @param item
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+    }
 
-        return super.onOptionsItemSelected(item);
+    /**
+     * 浮窗item点击事件
+     *
+     * @param position
+     * @param item
+     */
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+
     }
 }

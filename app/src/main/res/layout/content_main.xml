@@ -12,8 +12,126 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/DP_60dp"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           >
+
+            <ImageView
+                android:layout_above="@+id/tv_etp"
+                android:id="@+id/iv_etp"
+                android:layout_width="@dimen/DP_50dp"
+                android:layout_height="@dimen/DP_50dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/etp_selector"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/tv_etp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="@string/etp"
+                android:layout_marginTop="@dimen/DP_10dp"
+                android:textColor="@color/black_three"
+                android:textSize="@dimen/SP_10sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_above="@+id/tv_test"
+                android:id="@+id/iv_test"
+                android:layout_width="@dimen/DP_50dp"
+                android:layout_height="@dimen/DP_50dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/test_selector"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/tv_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/DP_10dp"
+                android:text="@string/test"
+                android:textColor="@color/black_three"
+                android:textSize="@dimen/SP_10sp" />
+        </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_mfunction"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="@drawable/mfunction_selector"-->
+                <!--android:clickable="true" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/mfunction"-->
+                <!--android:textColor="@color/black_three"-->
+                <!--android:textSize="@dimen/SP_10sp" />-->
+        <!--</RelativeLayout>-->
+
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout xmlns:rfal="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            rfal:rfal_frame_alpha="0"
+            rfal:rfal_frame_color="#ffffff">
+
+            <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/label_list_sample_rfab"
+                android:layout_width="wrap_content"
+                android:layout_above="@+id/tv_mfunction"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="25dp"
+                android:layout_marginRight="15dp"
+                rfab:rfab_drawable="@drawable/mfunction_selector"/>
+            <TextView
+                android:layout_marginTop="@dimen/DP_10dp"
+                android:id="@+id/tv_mfunction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mfunction"
+                android:textSize="@dimen/SP_10sp"
+                android:textColor="@color/black_three"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"/>
+            <!--rfab:rfab_shadow_dx="0dp"
+                rfab:rfab_shadow_dy="5dp"
+                rfab:rfab_shadow_radius="7dp"
+                rfab:rfab_size="normal"
+                rfab:rfab_color_normal="#37474f"
+                rfab:rfab_color_pressed="#263238"
+                rfab:rfab_shadow_color="#999999"
+            rfab:rfab_drawable="@drawable/mfunction_selector"-->
+        </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+    </LinearLayout>
 </RelativeLayout>

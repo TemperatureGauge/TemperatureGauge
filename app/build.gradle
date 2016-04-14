@@ -35,4 +35,8 @@ dependencies {
     compile 'org.glassfish:javax.annotation:10.0-b28' // Java标注
     // Butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
+
+    //悬浮按钮库
+    compile project(':rapidFloatingActionButton')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

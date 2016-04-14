@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">TemperatureGaugeBaby</string>
     <string name="action_settings">Settings</string>
+
+    <!-- 用于通过唯一的identificationCode获取 -->
+    <string name="rfab_identification_code_fragment_a">RFAB_IDENTIFICATION_CODE_FRAGMENT_A</string>
+    <string name="rfab_identification_code_fragment_b">RFAB_IDENTIFICATION_CODE_FRAGMENT_B</string>
+    <string name="rfab_identification_code_fragment_c">RFAB_IDENTIFICATION_CODE_FRAGMENT_C</string>
+
+    <!--主界面-->
+    <string name="etp">环境温度</string>
+    <string name="test">点击测量</string>
+    <string name="mfunction">多功能</string>
 </resources>
