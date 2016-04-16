@@ -8,6 +8,16 @@
     <color name="black">#999999</color>
     <color name="black_six">#666666</color>
     <color name="black_three">#333333</color>
+    <!--白色-->
+    <color name="white">#FFFFFF</color>
+    <color name="white99">#99FFFFFF</color>
+    <!--基础色-->
+    <color name="blue">#00bef3</color>
+    <color name="black_gry">#405160</color>
+
+    <!--透明背景-->
+    <color name="bg_popuwindow">#b0000000</color>
+
 
 
 </resources>

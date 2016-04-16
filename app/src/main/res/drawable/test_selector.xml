@@ -14,8 +14,8 @@
     &lt;!&ndash; 默认时的背景图片&ndash;&gt;
     <item android:drawable="@mipmap/etp_normal" />-->
 
-    <item android:drawable="@mipmap/test_pressed" android:state_focused="true"/>
-    <item android:drawable="@mipmap/test_pressed" android:state_selected="true"/>
-    <item android:drawable="@mipmap/test_pressed" android:state_pressed="true"/>
-    <item android:drawable="@mipmap/test_normal"/>
+    <item android:drawable="@drawable/test_pressed" android:state_focused="true"/>
+    <item android:drawable="@drawable/test_pressed" android:state_selected="true"/>
+    <item android:drawable="@drawable/test_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/test_normal"/>
 </selector>

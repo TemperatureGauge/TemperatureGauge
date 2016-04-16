@@ -7,8 +7,21 @@
     <string name="rfab_identification_code_fragment_b">RFAB_IDENTIFICATION_CODE_FRAGMENT_B</string>
     <string name="rfab_identification_code_fragment_c">RFAB_IDENTIFICATION_CODE_FRAGMENT_C</string>
 
+    <!--基础文字-->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
     <!--主界面-->
     <string name="etp">环境温度</string>
     <string name="test">点击测量</string>
     <string name="mfunction">多功能</string>
+
+    <!--蓝牙设备弹窗-->
+    <string name="pop_devivelist_text1">切换用户</string>
+    <string name="pop_devivelist_text2">选择当前</string>
+    <string name="pop_devivelist_text3">新建用户</string>
+
+    <!--新建baby-->
+    <string name="pop_newuser_text1">添加用户</string>
+    <string name="pop_newuser_text2">输入名称</string>
 </resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_devicelist"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_popuwindow" >
+
+   <RelativeLayout
+       android:id="@+id/rl_pop"
+        android:layout_width="250dp"
+        android:layout_height="280dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/pop_devivelist_bg">
+        <TextView
+            android:id="@+id/pop_devivelist_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/pop_devivelist_text1"
+            android:textColor="@color/black_six"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/blelist"
+            android:layout_width="220dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="@dimen/DP_20dp"
+            android:layout_below="@+id/pop_devivelist_text1"
+            android:layout_centerHorizontal="true"
+            android:cacheColorHint="#000000"
+            android:scrollbars="none"
+            android:divider="@color/black"
+            android:dividerHeight="1px"
+            android:listSelector="#00000000" >
+        </ListView>
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="@dimen/DP_20dp">
+        <Button
+            android:id="@+id/bt_linkBle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/blelist"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/DP_10dp"
+            android:layout_marginLeft="@dimen/DP_20dp"
+            android:background="@drawable/pop_devicelist_button1"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="@string/pop_devivelist_text2"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+           <Button
+               android:id="@+id/bt_newUser"
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/blelist"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="20dp"
+               android:layout_marginRight="@dimen/DP_20dp"
+               android:layout_marginLeft="@dimen/DP_10dp"
+               android:background="@drawable/pop_devicelist_button2"
+               android:paddingBottom="3dp"
+               android:paddingTop="3dp"
+               android:text="@string/pop_devivelist_text3"
+               android:textColor="@android:color/white"
+               android:textSize="14sp" />
+
+       </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
