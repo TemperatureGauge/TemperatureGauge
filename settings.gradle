@@ -1,1 +1,1 @@
-include ':app', ':rapidFloatingActionButton'
+include ':rapidFloatingActionButton', ':app'
