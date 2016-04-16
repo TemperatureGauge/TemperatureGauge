@@ -24,4 +24,11 @@
     <!--新建baby-->
     <string name="pop_newuser_text1">添加用户</string>
     <string name="pop_newuser_text2">输入名称</string>
+
+    <!--相册相机-->
+    <string name="photo">相册</string>
+    <string name="camera">相机</string>
+
+    <!--setting-->
+    <string name="high_alarm">高温报警</string>
 </resources>

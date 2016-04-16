@@ -20,7 +20,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/pop_devivelist_text1"
             android:textColor="@color/black_six"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <ListView
             android:id="@+id/blelist"
@@ -57,7 +57,7 @@
             android:paddingTop="3dp"
             android:text="@string/pop_devivelist_text2"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
            <Button
                android:id="@+id/bt_newUser"
@@ -74,7 +74,7 @@
                android:paddingTop="3dp"
                android:text="@string/pop_devivelist_text3"
                android:textColor="@android:color/white"
-               android:textSize="14sp" />
+               android:textSize="12sp" />
 
        </LinearLayout>
 

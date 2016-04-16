@@ -17,6 +17,7 @@
 
     <!--透明背景-->
     <color name="bg_popuwindow">#b0000000</color>
+    <color name="transparent">#00000000</color>
 
 
 

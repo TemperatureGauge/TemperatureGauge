@@ -20,10 +20,11 @@
             android:layout_marginTop="10dp"
             android:text="@string/pop_newuser_text1"
             android:textColor="@color/black_six"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
 
        <com.example.theone.temperaturegaugebaby.views.CircleImageView
+           android:id="@+id/iv_newuser"
            android:layout_width="@dimen/DP_80dp"
            android:layout_height="@dimen/DP_80dp"
            android:layout_above="@+id/et_name"
@@ -34,8 +35,6 @@
            android:layout_marginRight="@dimen/DP_10dp"></com.example.theone.temperaturegaugebaby.views.CircleImageView>
 
 
-
-
        <EditText
            android:id="@+id/et_name"
            android:layout_above="@+id/bt_newUser"
@@ -43,13 +42,13 @@
            android:layout_height="wrap_content"
            android:hint="@string/pop_newuser_text2"
            android:gravity="center"
-           android:textSize="@dimen/SP_14sp"
+           android:textSize="@dimen/SP_12sp"
            android:textColorHighlight="@color/black_three"
            android:layout_marginRight="@dimen/DP_40dp"
            android:layout_marginLeft="@dimen/DP_40dp"
            android:paddingTop="@dimen/DP_8dp"
            android:paddingBottom="@dimen/DP_8dp"
-           android:background="@null"/>
+           android:background="@drawable/et_bg"/>
 
         <Button
             android:id="@+id/bt_newUser"
@@ -67,7 +66,7 @@
             android:paddingTop="3dp"
             android:text="@string/ok"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

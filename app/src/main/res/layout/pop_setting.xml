@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DP_200dp"
+        android:background="@color/blue">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DP_50dp"
+            android:text="@string/high_alarm"
+            android:gravity="center"
+            android:textSize="@dimen/SP_17sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    
+    
+    <ListView
+        android:id="@+id/sound_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DP_160dp"
+        android:listSelector="@color/transparent"
+        android:divider="@color/black_gry"
+        android:dividerHeight="1px"
+        android:scrollbars="none">
+    </ListView>
+</LinearLayout>

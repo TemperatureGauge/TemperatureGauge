@@ -17,4 +17,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--gif样式-->
+    <style name="Widget_GifView" />
+    <!-- 自定义等待框样式 -->
+
 </resources>
