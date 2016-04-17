@@ -8,14 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -24,8 +27,10 @@ import com.example.theone.temperaturegaugebaby.adapter.SoundListAdapter;
 import com.example.theone.temperaturegaugebaby.bean.Sound;
 import com.example.theone.temperaturegaugebaby.utils.ActivitySwitcher;
 import com.example.theone.temperaturegaugebaby.utils.DisplayUtils;
+import com.example.theone.temperaturegaugebaby.utils.LogUtil;
 import com.example.theone.temperaturegaugebaby.utils.PopUtils;
 import com.example.theone.temperaturegaugebaby.views.SystemBarTintManager;
+import com.example.theone.temperaturegaugebaby.views.ThermometerView;
 import com.wangjie.androidbucket.present.ABActionBarActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -58,6 +63,20 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
     RapidFloatingActionButton rfaButton;
     @Bind(R.id.tv_user)
     TextView mUserName;
+    @Bind(R.id.thermometerview)
+    ThermometerView thermometerview;
+    @Bind(R.id.mark_left)
+    ImageButton mark_left;
+    @Bind(R.id.mark_right)
+    ImageButton mark_right;
+    @Bind(R.id.unit_f)
+    ImageButton unit_f;
+    @Bind(R.id.unit_c)
+    ImageButton unit_c;
+    @Bind(R.id.rl_leftmark)
+    RelativeLayout rl_leftmark;
+    @Bind(R.id.rl_rightmark)
+    RelativeLayout rl_rightmark;
 
     private static PopupWindow lpopupWindow;
     private static PopupWindow newuser_popupWindow;
@@ -84,6 +103,88 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         setSupportActionBar(toolbar);
         //初始化悬浮菜单
         ininRapidFloatingAction();
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        //华氏温度的浮标滑动
+
+        int[] location = new int[2];
+        mark_left.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+        final int top = y;
+        final int bottom = y+mark_left.getHeight();
+        LogUtil.LogI("main", "top = " + top + "---bottom = " + bottom);
+        rl_leftmark.setOnTouchListener(new View.OnTouchListener() {
+
+            float yDOWN = 0f;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        setPressLeft(true);
+                        setPressRight(false);
+                        yDOWN = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float yMOVE = event.getRawY();
+                        LogUtil.LogI("main", "yMOVE = " + yMOVE);
+                        if (yMOVE > top && yMOVE < bottom) {
+                            rl_leftmark.animate().translationYBy(yMOVE - yDOWN).setDuration(0);
+                            yDOWN = yMOVE;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        setPressLeft(true);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+        rl_rightmark.setOnTouchListener(new View.OnTouchListener() {
+
+            float yDOWN = 0f;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        setPressLeft(false);
+                        setPressRight(true);
+                        yDOWN = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float yMOVE = event.getRawY();
+                        LogUtil.LogI("main", "yMOVE = " + yMOVE);
+                        if (yMOVE > top && yMOVE < bottom) {
+                            rl_rightmark.animate().translationYBy(yMOVE - yDOWN).setDuration(0);
+                            yDOWN = yMOVE;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        setPressRight(true);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void setPressLeft(boolean pressed) {
+        mark_left.setPressed(pressed);
+        unit_f.setPressed(pressed);
+        rl_leftmark.setPressed(pressed);
+    }
+    private void setPressRight(boolean pressed) {
+        mark_right.setPressed(pressed);
+        unit_c.setPressed(pressed);
+        rl_rightmark.setPressed(pressed);
     }
 
     @TargetApi(19)

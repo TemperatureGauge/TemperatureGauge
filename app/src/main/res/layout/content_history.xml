@@ -22,7 +22,7 @@
             android:gravity="bottom|center_horizontal"
             android:text="35.7℃"
             android:textColor="@color/white"
-            android:textSize="@dimen/SP_50sp" />
+            android:textSize="50sp" />
 
         <LinearLayout
             android:layout_marginTop="@dimen/DP_10dp"

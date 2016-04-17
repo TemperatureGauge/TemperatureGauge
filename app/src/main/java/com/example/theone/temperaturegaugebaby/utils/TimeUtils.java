@@ -676,7 +676,6 @@ public class TimeUtils {
 		try {
 			date = formatDate.parse(time);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (date == null) {

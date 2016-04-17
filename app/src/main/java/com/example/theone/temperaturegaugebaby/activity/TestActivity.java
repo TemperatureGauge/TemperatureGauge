@@ -87,7 +87,6 @@ public class TestActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private View.OnTouchListener listTouchListener = new View.OnTouchListener() {
 
         public boolean onTouch(View v, MotionEvent event) {
-            // TODO Auto-generated method stub
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_DOWN: {
@@ -127,7 +126,6 @@ public class TestActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // TODO Auto-generated method stub
                 if (isLastRow && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     //加载元素
 //                    Page++;

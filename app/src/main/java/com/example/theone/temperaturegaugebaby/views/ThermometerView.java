@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.theone.temperaturegaugebaby.R;
@@ -22,7 +20,7 @@ public class ThermometerView extends FrameLayout {
     private int fgResId = R.drawable.thermometer_fg;
     private Bitmap mScaledBitmap;
     private Bitmap mBitmap;
-    private float mRatio = 0.1f;
+    private float mRatio = 0.99f;
     private Paint paint;
     private Bitmap disPlayBitmap;
 
@@ -58,9 +56,9 @@ public class ThermometerView extends FrameLayout {
         height*=(1-mRatio);
 
         disPlayBitmap = cropBitmap(mBitmap,height);
-       canvas.drawBitmap(disPlayBitmap, -11f, 13f+height, null);
+       canvas.drawBitmap(disPlayBitmap, 0f, height, null);
 
-        canvas.drawBitmap(mScaledBitmap, -8f, 40f, null);
+        canvas.drawBitmap(mScaledBitmap, 0f, 0f, null);
 
     }
 
