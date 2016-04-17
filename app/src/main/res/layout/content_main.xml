@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/DP_60dp"
+        android:layout_marginBottom="@dimen/DP_20dp"
         android:orientation="horizontal"
         android:gravity="bottom">
 

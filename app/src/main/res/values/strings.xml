@@ -31,4 +31,11 @@
 
     <!--setting-->
     <string name="high_alarm">高温报警</string>
+    <string name="start">32.0℃</string>
+    <string name="end">42.0℃</string>
+
+    <!--历史纪录-->
+    <string name="test_tp">温度测量</string>
+    <string name="history_tp">历史记录</string>
+    <string name="test_list">测量列表</string>
 </resources>

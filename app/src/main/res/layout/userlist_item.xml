@@ -8,6 +8,7 @@
     <com.example.theone.temperaturegaugebaby.views.CircleImageView
         android:layout_width="@dimen/DP_50dp"
         android:layout_height="@dimen/DP_50dp"
+        android:id="@+id/iv_baby"
         android:background="@drawable/baby_default1"
         android:layout_marginLeft="@dimen/DP_10dp"
         android:layout_marginRight="@dimen/DP_10dp"></com.example.theone.temperaturegaugebaby.views.CircleImageView>

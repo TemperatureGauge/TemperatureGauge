@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.example.theone.temperaturegaugebaby.R;
 import com.example.theone.temperaturegaugebaby.utils.ActivitySwitcher;
+import com.example.theone.temperaturegaugebaby.utils.ImageTools;
 import com.example.theone.temperaturegaugebaby.views.Gifview;
 
 import butterknife.Bind;
@@ -29,6 +30,7 @@ public class SplashActivity extends Activity {
                 case GIF_COMPLETE:
 //                    gif.setPaused(true);
                     ActivitySwitcher.goMainAct(SplashActivity.this);
+                    finish();
                     break;
                 default:
                     break;
@@ -48,5 +50,6 @@ public class SplashActivity extends Activity {
         if (gif.isPaused()) {
             ActivitySwitcher.goMainAct(this);
         }
+        ImageTools.initImageLoader(this);
     }
 }

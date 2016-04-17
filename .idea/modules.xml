@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/TemperatureGauge.iml" filepath="$PROJECT_DIR$/TemperatureGauge.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/rapidFloatingActionButton/rapidFloatingActionButton.iml" filepath="$PROJECT_DIR$/rapidFloatingActionButton/rapidFloatingActionButton.iml" />

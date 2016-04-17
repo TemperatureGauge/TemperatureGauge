@@ -1,1 +1,1 @@
-include ':rapidFloatingActionButton', ':app'
+include ':rapidFloatingActionButton', ':app', ':MPChartLib'

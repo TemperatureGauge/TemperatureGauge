@@ -14,11 +14,18 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!--gif样式-->
     <style name="Widget_GifView" />
     <!-- 自定义等待框样式 -->
+    <!--设置dialog-->
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/settingdialog_bg</item>
+    </style>
+    <style name="main_menu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/setting_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/setting_dialog_out_anim</item>
+    </style>
 
 </resources>

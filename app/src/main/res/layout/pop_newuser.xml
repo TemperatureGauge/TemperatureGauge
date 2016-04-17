@@ -7,8 +7,8 @@
 
    <RelativeLayout
        android:id="@+id/rl_pop"
-        android:layout_width="250dp"
-        android:layout_height="280dp"
+        android:layout_width="240dp"
+        android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="60dp"
         android:background="@drawable/pop_devivelist_bg">
@@ -19,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="@string/pop_newuser_text1"
-            android:textColor="@color/black_six"
+            android:textColor="@color/black_three"
             android:textSize="17sp" />
 
 
@@ -38,11 +38,12 @@
        <EditText
            android:id="@+id/et_name"
            android:layout_above="@+id/bt_newUser"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_width="@dimen/DP_80dp"
+           android:layout_height="@dimen/DP_30dp"
            android:hint="@string/pop_newuser_text2"
            android:gravity="center"
            android:textSize="@dimen/SP_12sp"
+           android:layout_centerHorizontal="true"
            android:textColorHighlight="@color/black_three"
            android:layout_marginRight="@dimen/DP_40dp"
            android:layout_marginLeft="@dimen/DP_40dp"
@@ -53,17 +54,15 @@
         <Button
             android:id="@+id/bt_newUser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DP_40dp"
             android:layout_below="@+id/blelist"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_marginRight="@dimen/DP_10dp"
             android:layout_marginLeft="@dimen/DP_20dp"
-            android:layout_marginBottom="@dimen/DP_20dp"
+            android:layout_marginBottom="@dimen/DP_10dp"
             android:background="@drawable/pop_devicelist_button1"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
             android:text="@string/ok"
             android:textColor="@android:color/white"
             android:textSize="12sp" />

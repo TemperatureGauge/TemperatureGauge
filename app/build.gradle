@@ -38,5 +38,7 @@ dependencies {
     //悬浮按钮库
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile project(':rapidFloatingActionButton')
+    compile project(':MPChartLib')
     compile files('src/main/libs/androideventbus-1.0.5.jar')
+    compile files('src/main/libs/universal-image-loader-1.9.5.jar')
 }

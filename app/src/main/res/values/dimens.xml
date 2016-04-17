@@ -36,6 +36,7 @@
     <dimen name="DP_80dp">80dp</dimen>
     <dimen name="DP_90dp">90dp</dimen>
     <dimen name="DP_100dp">100dp</dimen>
+    <dimen name="DP_120dp">120dp</dimen>
     <dimen name="DP_160dp">160dp</dimen>
     <dimen name="DP_200dp">200dp</dimen>
 
@@ -49,5 +50,7 @@
     <dimen name="SP_24sp">24sp</dimen>
     <dimen name="SP_28sp">28sp</dimen>
     <dimen name="SP_30sp">30sp</dimen>
+    <dimen name="SP_40sp">40sp</dimen>
+    <dimen name="SP_50sp">50sp</dimen>
 
 </resources>

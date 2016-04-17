@@ -14,6 +14,7 @@
     <!--基础色-->
     <color name="blue">#00bef3</color>
     <color name="black_gry">#405160</color>
+    <color name="black_normal">#526674</color>
 
     <!--透明背景-->
     <color name="bg_popuwindow">#b0000000</color>

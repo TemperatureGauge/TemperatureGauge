@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/DP_100dp"
+  android:gravity="center_vertical">
+
+    <com.example.theone.temperaturegaugebaby.views.CircleImageView
+        android:layout_width="@dimen/DP_50dp"
+        android:id="@+id/iv_baby"
+        android:layout_height="@dimen/DP_50dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/DP_10dp"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/baby_default1"></com.example.theone.temperaturegaugebaby.views.CircleImageView>
+    <TextView
+        android:id="@+id/tv_babyname"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Baby"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/iv_baby"
+        android:textSize="@dimen/SP_14sp"
+        android:textColor="@color/black_three"/>
+
+
+    <TextView
+        android:id="@+id/tv_tp"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/SP_14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/DP_10dp"
+        android:textColor="@color/black_three"
+        android:text="Baby"/>
+    <TextView
+        android:id="@+id/tv_time"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/SP_14sp"
+        android:layout_marginRight="@dimen/DP_10dp"
+        android:textColor="@color/black_three"
+        android:text="Baby"/>
+</RelativeLayout>

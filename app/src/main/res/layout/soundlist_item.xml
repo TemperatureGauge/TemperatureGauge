@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/DP_40dp"
+    android:layout_height="@dimen/DP_80dp"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical">
 <TextView
     android:id="@+id/tv_soundname"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/DP_50dp"
     android:text="铃声1"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
     android:gravity="center"
-    android:layout_gravity="left"
     android:layout_marginLeft="@dimen/DP_40dp"
     android:textColor="@color/black_three"
     android:textSize="@dimen/SP_14sp"
@@ -19,10 +21,11 @@
     <CheckBox
         android:id="@+id/cb_ble"
         android:layout_height="match_parent"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/DP_40dp"
         android:button="@null"
         android:clickable="false"
-        android:gravity="right"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/DP_10dp"
         android:drawableLeft="@drawable/checkbox_bg_selector"
@@ -31,4 +34,4 @@
         android:singleLine="true"
         android:text=""
         android:textSize="17sp" />
-</LinearLayout>
+</RelativeLayout>

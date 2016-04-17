@@ -8,9 +8,15 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.example.theone.temperaturegaugebaby.R;
 import com.example.theone.temperaturegaugebaby.activity.MainActivity;
+import com.example.theone.temperaturegaugebaby.adapter.UserListAdapter;
+import com.example.theone.temperaturegaugebaby.bean.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xiongxing on 2016/4/16.
@@ -19,6 +25,8 @@ public class PopUtils {
 
     private static PopupWindow lpopupWindow;
     private static PopupWindow newuser_popupWindow;
+    private static PopupWindow setting_popupWindow;
+    private static TextView tv_duration;
 
     public static void showDevicePop(final MainActivity mainActivity, final View view) {
         View pop_devivelist = View.inflate(mainActivity, R.layout.pop_devivelist, null);
@@ -64,6 +72,14 @@ public class PopUtils {
             }
         });
         ListView blelist = (ListView) pop_devivelist.findViewById(R.id.blelist);
+        List<User> userlist =new ArrayList<User>();
+        User user=new User();
+        user.setHeadUrl(null);
+        user.setName("小度");
+        user.setState("1");
+        userlist.add(user);
+        UserListAdapter  userListAdapter=new UserListAdapter(mainActivity,userlist);
+        blelist.setAdapter(userListAdapter);
     }
 
     /**
@@ -79,8 +95,6 @@ public class PopUtils {
                 .loadAnimation(mainActivity, R.anim.fade_in));
         newuser_popupWindow = new PopupWindow(pop_newuser,
                 ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
-        newuser_popupWindow.setFocusable(true);
-        newuser_popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         newuser_popupWindow.setTouchable(true);
         newuser_popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
@@ -88,8 +102,10 @@ public class PopUtils {
                 return false;
             }
         });
+        newuser_popupWindow.setFocusable(true);
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         newuser_popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        newuser_popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         newuser_popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -110,14 +126,5 @@ public class PopUtils {
                 ActivitySwitcher.goChoosePhotoAct(mainActivity);
             }
         });
-    }
-
-    /**
-     * 设置pop
-     * @param mainActivity
-     * @param item
-     */
-    public static void showSetingPop(final MainActivity mainActivity) {
-        View pop_setting = View.inflate(mainActivity, R.layout.pop_setting, null);
     }
 }

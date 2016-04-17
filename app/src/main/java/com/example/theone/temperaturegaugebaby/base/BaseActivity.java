@@ -53,7 +53,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public void finishActivity() {
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override

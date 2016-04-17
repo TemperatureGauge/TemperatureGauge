@@ -1,22 +1,31 @@
 package com.example.theone.temperaturegaugebaby.activity;
 
-import android.content.ClipData;
+import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.theone.temperaturegaugebaby.R;
+import com.example.theone.temperaturegaugebaby.adapter.SoundListAdapter;
+import com.example.theone.temperaturegaugebaby.bean.Sound;
 import com.example.theone.temperaturegaugebaby.utils.ActivitySwitcher;
+import com.example.theone.temperaturegaugebaby.utils.DisplayUtils;
 import com.example.theone.temperaturegaugebaby.utils.PopUtils;
+import com.example.theone.temperaturegaugebaby.views.SystemBarTintManager;
 import com.wangjie.androidbucket.present.ABActionBarActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -28,6 +37,7 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import org.simple.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,16 +64,39 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
 
     private RapidFloatingActionHelper rfabHelper;
     private final String KEY = "Dagger 2";
+    private TextView tv_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintColor(getResources().getColor(R.color.blue));
+
+
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //初始化悬浮菜单
         ininRapidFloatingAction();
+    }
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     private void ininRapidFloatingAction() {
@@ -72,15 +105,15 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
 //                        .setLabel("Github: wangjiegulu")
-                        .setResId(R.drawable.ico_test_d)
+                        .setResId(R.drawable.monitoring)
                         .setIconNormalColor(Color.parseColor("#00bef3"))
                         .setIconPressedColor(Color.parseColor("#00bef3"))
                         .setWrapper(0)
         );
         items.add(new RFACLabelItem<Integer>()
 //                        .setLabel("tiantian.china.2@gmail.com")
-                        .setResId(R.drawable.ico_test_c)
-                        .setDrawable(getResources().getDrawable(R.drawable.ico_test_c))
+                        .setResId(R.drawable.history)
+//                        .setDrawable(getResources().getDrawable(R.drawable.ico_test_c))
                         .setIconNormalColor(Color.parseColor("#00bef3"))
                         .setIconPressedColor(Color.parseColor("#00bef3"))
                         .setLabelColor(Color.WHITE)
@@ -141,16 +174,104 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         switch (position) {
             case 0:
-                PopUtils.showSetingPop(MainActivity.this);
+                ActivitySwitcher.goTestListAct(MainActivity.this);
                 break;
             case 1:
+                ActivitySwitcher.goHistoryAct(MainActivity.this);
                 break;
             case 2:
+                showSettingDialog();
                 break;
             case 3:
                 break;
 
         }
+    }
+
+    private void showSettingDialog() {
+        View dialog_setting = View.inflate(this, R.layout.pop_setting, null);
+        Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(dialog_setting, new RadioGroup.LayoutParams(RadioGroup.LayoutParams.FILL_PARENT, RadioGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        // 设置点击外围解散
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        ListView sound_list = (ListView) dialog_setting.findViewById(R.id.sound_list);
+        List<Sound> soundList=new ArrayList<Sound>();
+        Sound sound=new Sound();
+        sound.setState("1");
+        sound.setName("小夜曲");
+        soundList.add(sound);
+        SoundListAdapter soundListAdapter=new SoundListAdapter(MainActivity.this,soundList);
+        sound_list.setAdapter(soundListAdapter);
+        tv_duration = (TextView) dialog_setting.findViewById(R.id.tv_duration);
+        TextView tv_start = (TextView) dialog_setting.findViewById(R.id.tv_start);
+        final int tv_startWidth = tv_start.getWidth();
+        SeekBar seekBar = (SeekBar) dialog_setting.findViewById(R.id.sb_duration);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setSeekBarText(seekBar, tv_duration, "℃", MainActivity.this, tv_startWidth);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    /**
+     * 设置SeekBar文字说明的内容与位置
+     *
+     * @param seekBar
+     * @param text
+     * @param unit
+     */
+    private static void setSeekBarText(SeekBar seekBar, TextView text, String unit, Context context,int width) {
+        float wid = seekBar.getWidth();
+        float tvWid = text.getWidth();
+        LinearLayout.LayoutParams paramsStrength = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //目前进度占总最大进度的比例
+        float scale = (float) seekBar.getProgress() / (float) seekBar.getMax();
+        //文字说明控件左边距=目前进度的长度-文字说明控件text宽度的一半+SeekBar左边距20dp
+        int margin = (int) (scale * wid - DisplayUtils.dip2px(context, 20) + DisplayUtils.dip2px(context, 60));
+        paramsStrength.leftMargin = margin;
+        text.setLayoutParams(paramsStrength);
+        if (seekBar.getId() == R.id.sb_duration) {
+            float time = (float) seekBar.getProgress() / 3600;
+            //格式化小数的位数
+            String timeStr = formatFloat(time);
+            text.setText(timeStr + unit);
+//        }else if(seekBar.getId()==R.id.sb_times){
+//            int times = seekBar.getProgress()/100;
+//            text.setText(times+unit);
+//        }else{
+//            text.setText(seekBar.getProgress()+unit);
+//        }
+        }
+    }
+
+    private static String formatFloat(float time) {
+        //格式化小数的位数
+        String pattern = "0.#";
+        DecimalFormat df = new DecimalFormat(pattern);
+        return df.format(time);
     }
 
 
@@ -159,83 +280,7 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
      */
     @OnClick({R.id.tv_user})
     public void topNameClick() {
-//        PopUtils.showDevicePop(MainActivity.this, mUserName);
-        View pop_devivelist = View.inflate(MainActivity.this, R.layout.pop_devivelist, null);
-        pop_devivelist.startAnimation(AnimationUtils
-                .loadAnimation(MainActivity.this, R.anim.fade_in));
-        lpopupWindow = new PopupWindow(pop_devivelist,
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
-        lpopupWindow.setTouchable(true);
-        lpopupWindow.setTouchInterceptor(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        lpopupWindow.setFocusable(true);
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        lpopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        lpopupWindow.showAtLocation(mUserName, Gravity.CENTER, 0, 0);
-        lpopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-//                devicelist.clear();
-            }
-        });
-        //选择当前用户，连接蓝牙
-        pop_devivelist.findViewById(R.id.bt_linkBle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (lpopupWindow.isShowing()) {
-                    lpopupWindow.dismiss();
-                }
-            }
-        });
-
-        pop_devivelist.findViewById(R.id.bt_newUser).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (lpopupWindow.isShowing()) {
-                    lpopupWindow.dismiss();
-                }
-                View pop_newuser = View.inflate(MainActivity.this, R.layout.pop_newuser, null);
-                pop_newuser.startAnimation(AnimationUtils
-                        .loadAnimation(MainActivity.this, R.anim.fade_in));
-                newuser_popupWindow = new PopupWindow(pop_newuser,
-                        ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
-                newuser_popupWindow.setFocusable(true);
-                newuser_popupWindow.showAtLocation(mUserName, Gravity.CENTER, 0, 0);
-                newuser_popupWindow.setTouchable(true);
-                newuser_popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return false;
-                    }
-                });
-                // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-                newuser_popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                newuser_popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-
-                    }
-                });
-                pop_newuser.findViewById(R.id.bt_newUser).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (newuser_popupWindow.isShowing()) {
-                            newuser_popupWindow.dismiss();
-                        }
-                    }
-                });
-                pop_newuser.findViewById(R.id.iv_newuser).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivitySwitcher.goChoosePhotoAct(MainActivity.this);
-                    }
-                });
-            }
-        });
+        PopUtils.showDevicePop(MainActivity.this, mUserName);
     }
 
     @Override
