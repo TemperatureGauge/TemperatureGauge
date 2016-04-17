@@ -24,11 +24,14 @@ import android.widget.TextView;
 
 import com.example.theone.temperaturegaugebaby.R;
 import com.example.theone.temperaturegaugebaby.adapter.SoundListAdapter;
+import com.example.theone.temperaturegaugebaby.adapter.UserListAdapter;
 import com.example.theone.temperaturegaugebaby.bean.Sound;
+import com.example.theone.temperaturegaugebaby.bean.User;
+import com.example.theone.temperaturegaugebaby.dialog.UserDialogOne;
+import com.example.theone.temperaturegaugebaby.dialog.UserDialogTwo;
 import com.example.theone.temperaturegaugebaby.utils.ActivitySwitcher;
 import com.example.theone.temperaturegaugebaby.utils.DisplayUtils;
 import com.example.theone.temperaturegaugebaby.utils.LogUtil;
-import com.example.theone.temperaturegaugebaby.utils.PopUtils;
 import com.example.theone.temperaturegaugebaby.views.SystemBarTintManager;
 import com.example.theone.temperaturegaugebaby.views.ThermometerView;
 import com.wangjie.androidbucket.present.ABActionBarActivity;
@@ -84,6 +87,8 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
     private RapidFloatingActionHelper rfabHelper;
     private final String KEY = "Dagger 2";
     private TextView tv_duration;
+    private UserDialogOne userDialogOne;
+    private UserDialogTwo userDialogTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +121,7 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         int x = location[0];
         int y = location[1];
         final int top = y;
-        final int bottom = y+mark_left.getHeight();
+        final int bottom = y + mark_left.getHeight();
         LogUtil.LogI("main", "top = " + top + "---bottom = " + bottom);
         rl_leftmark.setOnTouchListener(new View.OnTouchListener() {
 
@@ -181,6 +186,7 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         unit_f.setPressed(pressed);
         rl_leftmark.setPressed(pressed);
     }
+
     private void setPressRight(boolean pressed) {
         mark_right.setPressed(pressed);
         unit_c.setPressed(pressed);
@@ -308,12 +314,12 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
         ListView sound_list = (ListView) dialog_setting.findViewById(R.id.sound_list);
-        List<Sound> soundList=new ArrayList<Sound>();
-        Sound sound=new Sound();
+        List<Sound> soundList = new ArrayList<Sound>();
+        Sound sound = new Sound();
         sound.setState("1");
         sound.setName("小夜曲");
         soundList.add(sound);
-        SoundListAdapter soundListAdapter=new SoundListAdapter(MainActivity.this,soundList);
+        SoundListAdapter soundListAdapter = new SoundListAdapter(MainActivity.this, soundList);
         sound_list.setAdapter(soundListAdapter);
         tv_duration = (TextView) dialog_setting.findViewById(R.id.tv_duration);
         TextView tv_start = (TextView) dialog_setting.findViewById(R.id.tv_start);
@@ -344,7 +350,7 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
      * @param text
      * @param unit
      */
-    private static void setSeekBarText(SeekBar seekBar, TextView text, String unit, Context context,int width) {
+    private static void setSeekBarText(SeekBar seekBar, TextView text, String unit, Context context, int width) {
         float wid = seekBar.getWidth();
         float tvWid = text.getWidth();
         LinearLayout.LayoutParams paramsStrength = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -381,7 +387,77 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
      */
     @OnClick({R.id.tv_user})
     public void topNameClick() {
-        PopUtils.showDevicePop(MainActivity.this, mUserName);
+        showUserDialogOne();
+    }
+
+    private void showUserDialogOne() {
+        UserDialogOne.OnToLoginClickListener lis = new UserDialogOne.OnToLoginClickListener() {
+
+            public void getText(String type,
+                                int param) {
+            }
+        };
+        userDialogOne =new UserDialogOne(
+                MainActivity.this, lis,
+                R.style.auth_dialog);
+        userDialogOne.setCanceledOnTouchOutside(true);
+        userDialogOne.show();
+        //选择当前用户，连接蓝牙
+        userDialogOne.findViewById(R.id.bt_linkBle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userDialogOne.isShowing()) {
+                    userDialogOne.dismiss();
+                }
+            }
+        });
+
+        userDialogOne.findViewById(R.id.bt_newUser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userDialogOne.isShowing()) {
+                    userDialogOne.dismiss();
+                }
+                showUserDialogTwo();
+            }
+        });
+        ListView blelist = (ListView) userDialogOne.findViewById(R.id.blelist);
+        List<User> userlist = new ArrayList<User>();
+        User user = new User();
+        user.setHeadUrl(null);
+        user.setName("小度");
+        user.setState("1");
+        userlist.add(user);
+        UserListAdapter userListAdapter = new UserListAdapter(MainActivity.this, userlist);
+        blelist.setAdapter(userListAdapter);
+    }
+
+    private void showUserDialogTwo() {
+        UserDialogTwo.OnToLoginClickListener lis = new UserDialogTwo.OnToLoginClickListener() {
+
+            public void getText(String type,
+                                int param) {
+            }
+        };
+        userDialogTwo =new UserDialogTwo(
+                MainActivity.this, lis,
+                R.style.auth_dialog);
+        userDialogTwo.setCanceledOnTouchOutside(true);
+        userDialogTwo.show();
+        userDialogTwo.findViewById(R.id.bt_newUser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userDialogTwo.isShowing()) {
+                    userDialogTwo.dismiss();
+                }
+            }
+        });
+        userDialogTwo.findViewById(R.id.iv_newuser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivitySwitcher.goChoosePhotoAct(MainActivity.this);
+            }
+        });
     }
 
     @Override

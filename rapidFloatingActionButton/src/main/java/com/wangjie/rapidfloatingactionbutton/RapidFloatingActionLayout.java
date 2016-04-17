@@ -177,7 +177,6 @@ public class RapidFloatingActionLayout extends RelativeLayout implements OnClick
                     WindowManager wm = (WindowManager) RapidFloatingActionLayout.this.getContext().getSystemService(Context.WINDOW_SERVICE);
                     Display display = wm.getDefaultDisplay();
                     // Use of deprecated method to support API 9
-                    // TODO: Separate in two and use #getSize() for the newer APIs
                     int width = display.getWidth();  // deprecated
                     int height = display.getHeight();  // deprecated
                     // Before the button

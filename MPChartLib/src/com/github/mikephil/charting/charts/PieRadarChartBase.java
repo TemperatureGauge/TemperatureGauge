@@ -14,7 +14,6 @@ import android.view.MotionEvent;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.Legend.LegendPosition;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.data.Entry;
@@ -431,13 +430,11 @@ public abstract class PieRadarChartBase<T extends ChartData<? extends IDataSet<?
 
     @Override
     public float getYChartMax() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public float getYChartMin() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
