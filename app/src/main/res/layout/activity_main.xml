@@ -47,10 +47,11 @@
                     android:text="12%" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/link_device"
+                    android:layout_width="@dimen/DP_50dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/DP_20dp"
+                    android:clickable="true"
                     android:gravity="center">
 
                     <ImageView

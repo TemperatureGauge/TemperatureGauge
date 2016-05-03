@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_gravity="center"
+     >
+	<ImageView 
+        android:id="@+id/iv_devicemark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true" 
+        android:src="@drawable/unknowdevice"/>
+    <CheckBox
+        android:id="@+id/cb_ble"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/iv_devicemark"
+        android:button="@null"
+        android:clickable="false"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="30dp"
+        android:drawableLeft="@drawable/checkbox_bg_selector"
+        android:drawablePadding="10dp"
+        android:focusable="false"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="13sp" />
+
+<!--     <TextView -->
+<!--         android:id="@+id/tv_streng" -->
+<!--         android:layout_width="0dp" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_weight="1" -->
+<!--         android:text="" -->
+<!--         android:textColor="@android:color/white" -->
+<!--         android:textSize="18sp" /> -->
+
+    <ImageView 
+        android:id="@+id/iv_rssi"
+        android:layout_marginRight="5dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" 
+        android:src="@drawable/rssi0"/>
+</RelativeLayout >

@@ -62,15 +62,17 @@
        android:clickable="true"
        android:background="@drawable/value_left_selector"
        android:layout_toLeftOf="@id/thermometerview"
+       android:layout_marginRight="@dimen/DP_5"
        android:layout_below="@id/unit_f"
        >
 
        <TextView
+           android:id="@+id/left_tem_value"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerVertical="true"
            android:drawableRight="@drawable/unit_fahrenheit_selector"
-           android:text="88.8"
+           android:text="89.6"
            android:textColor="@color/value_num_selector"
            android:textSize="@dimen/tem_value_size"
            android:layout_marginLeft="@dimen/DP_5"
@@ -84,14 +86,16 @@
         android:clickable="true"
         android:background="@drawable/value_right_selector"
         android:layout_toRightOf="@id/thermometerview"
+        android:layout_marginLeft="@dimen/DP_5"
         android:layout_below="@id/unit_c"
         >
         <TextView
+            android:id="@+id/right_tem_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawableRight="@drawable/unit_cetigrade_selector"
-            android:text="38.8"
+            android:text="32.0"
             android:textColor="@color/value_num_selector"
             android:textSize="@dimen/tem_value_size"
             android:layout_marginLeft="15dp"

@@ -1,12 +1,15 @@
 package com.example.theone.temperaturegaugebaby.activity;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,17 +26,26 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.theone.temperaturegaugebaby.R;
+import com.example.theone.temperaturegaugebaby.UUIDS.UUIDS;
 import com.example.theone.temperaturegaugebaby.adapter.SoundListAdapter;
 import com.example.theone.temperaturegaugebaby.adapter.UserListAdapter;
+import com.example.theone.temperaturegaugebaby.application.MyApplication;
 import com.example.theone.temperaturegaugebaby.bean.Sound;
 import com.example.theone.temperaturegaugebaby.bean.User;
 import com.example.theone.temperaturegaugebaby.dialog.UserDialogOne;
 import com.example.theone.temperaturegaugebaby.dialog.UserDialogTwo;
+import com.example.theone.temperaturegaugebaby.service.BLEDevice;
+import com.example.theone.temperaturegaugebaby.service.BleManager;
+import com.example.theone.temperaturegaugebaby.service.RFStarBLEService;
 import com.example.theone.temperaturegaugebaby.utils.ActivitySwitcher;
+import com.example.theone.temperaturegaugebaby.utils.DataUtils;
 import com.example.theone.temperaturegaugebaby.utils.DisplayUtils;
 import com.example.theone.temperaturegaugebaby.utils.LogUtil;
+import com.example.theone.temperaturegaugebaby.utils.StringUtil;
 import com.example.theone.temperaturegaugebaby.views.SystemBarTintManager;
 import com.example.theone.temperaturegaugebaby.views.ThermometerView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wangjie.androidbucket.present.ABActionBarActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -45,16 +57,20 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import org.simple.eventbus.EventBus;
 
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends ABActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class MainActivity extends ABActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener, BLEDevice.RFStarBLEBroadcastReceiver {
 
 
     //    @Inject
@@ -80,6 +96,12 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
     RelativeLayout rl_leftmark;
     @Bind(R.id.rl_rightmark)
     RelativeLayout rl_rightmark;
+    @Bind(R.id.right_tem_value)
+    TextView right_tem_value;
+    @Bind(R.id.left_tem_value)
+    TextView left_tem_value;
+    @Bind(R.id.link_device)
+    View link_device;
 
     private static PopupWindow lpopupWindow;
     private static PopupWindow newuser_popupWindow;
@@ -89,6 +111,9 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
     private TextView tv_duration;
     private UserDialogOne userDialogOne;
     private UserDialogTwo userDialogTwo;
+    private static final byte STARTMESURE = (byte)0x01;
+    private static final byte STOPMESURE = (byte)0x00;
+    private int temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +134,19 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         //初始化悬浮菜单
         ininRapidFloatingAction();
 
+        InputStream inputStream = getResources().openRawResource(R.raw.temp);
+         String tempJson =  StringUtil.getString(inputStream);
+        Type type = new TypeToken<Map<String,String>>() {}.getType();
+        Gson gson = new Gson();
+        Map<String,String> map = gson.fromJson(tempJson,type);
+        for (String key : map.keySet()) {
+            System.out.println("key= "+ key + " and value= " + map.get(key));
+        }
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -122,13 +159,24 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
         int y = location[1];
         final int top = y;
         final int bottom = y + mark_left.getHeight();
-        LogUtil.LogI("main", "top = " + top + "---bottom = " + bottom);
+
+        rl_leftmark.getLocationOnScreen(location);
+        viewTranslationYBy(rl_leftmark, bottom - rl_leftmark.getHeight() / 2 - location[1]);
+        rl_rightmark.getLocationOnScreen(location);
+        viewTranslationYBy(rl_rightmark, bottom - rl_rightmark.getHeight() / 2 - location[1]);
+
         rl_leftmark.setOnTouchListener(new View.OnTouchListener() {
 
             float yDOWN = 0f;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                int x = location[0];
+                int y = location[1];
+                int offet = v.getHeight() / 2;
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         setPressLeft(true);
@@ -137,9 +185,11 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float yMOVE = event.getRawY();
-                        LogUtil.LogI("main", "yMOVE = " + yMOVE);
-                        if (yMOVE > top && yMOVE < bottom) {
-                            rl_leftmark.animate().translationYBy(yMOVE - yDOWN).setDuration(0);
+                        LogUtil.LogI("main", "yMOVE = " + yMOVE + "y==" + y);
+                        float dy = yMOVE - yDOWN;
+                        float moveto = y + offet + dy;
+                        if (moveto > top && moveto < bottom) {
+                            touchViewTranslation(dy, moveto, top, bottom);
                             yDOWN = yMOVE;
                         }
                         break;
@@ -157,6 +207,11 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                int x = location[0];
+                int y = location[1];
+                int offet = v.getHeight() / 2;
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         setPressLeft(false);
@@ -166,8 +221,11 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
                     case MotionEvent.ACTION_MOVE:
                         float yMOVE = event.getRawY();
                         LogUtil.LogI("main", "yMOVE = " + yMOVE);
-                        if (yMOVE > top && yMOVE < bottom) {
-                            rl_rightmark.animate().translationYBy(yMOVE - yDOWN).setDuration(0);
+                        float dy = yMOVE - yDOWN;
+                        float moveto = y + offet + dy;
+                        //滑动的位置不超出边缘
+                        if (moveto > top && moveto < bottom) {
+                            touchViewTranslation(dy, moveto, top, bottom);
                             yDOWN = yMOVE;
                         }
                         break;
@@ -179,6 +237,30 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
                 return false;
             }
         });
+    }
+
+    @OnClick({R.id.link_device})
+    public void setLinkDevice(){
+        BleManager.searchBLE(this,getWindow().getDecorView(),this);
+    }
+    private void touchViewTranslation(float dy,float moveto,int top,int bottom){
+        viewTranslationYBy(rl_leftmark, dy);
+        //华氏温度89.6--107.6
+        float temp = 107.6f - (moveto - top) * 18f / (bottom - top);
+        BigDecimal bd = new BigDecimal(temp);
+        bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
+        left_tem_value.setText(Float.toString(bd.floatValue()));
+
+        viewTranslationYBy(rl_rightmark, dy);
+        //温度范围42--32
+        float temp1 = 42 - (moveto - top) * 10 / (bottom - top);
+        BigDecimal bd1 = new BigDecimal(temp1);
+        bd1 = bd1.setScale(1, BigDecimal.ROUND_HALF_UP);
+        right_tem_value.setText(Float.toString(bd1.floatValue()));
+    }
+
+    private void viewTranslationYBy(View view,float dy){
+        view.animate().translationYBy(dy).setDuration(0);
     }
 
     private void setPressLeft(boolean pressed) {
@@ -481,5 +563,36 @@ public class MainActivity extends ABActionBarActivity implements RapidFloatingAc
 //        } else {
 //            return super.onKeyDown(keyCode, event);
 //        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent, String macData, String uuid) {
+        String characteristicUUID = intent.getStringExtra(RFStarBLEService.RFSTAR_CHARACTERISTIC_ID);
+        if (RFStarBLEService.ACTION_GATT_CONNECTED.equals(intent.getAction())) {
+            LogUtil.LogI("onReceive","ACTION_GATT_CONNECTED");
+        } else if (RFStarBLEService.ACTION_GATT_DISCONNECTED.equals(intent.getAction())) { // 断开
+            LogUtil.LogI("onReceive","ACTION_GATT_DISCONNECTED");
+        } else if (RFStarBLEService.ACTION_GATT_SERVICES_DISCOVERED.equals(intent.getAction())) {
+            LogUtil.LogI("onReceive","ACTION_GATT_SERVICES_DISCOVERED");
+            if (BleManager.cubicBLEDevice != null) {
+                BleManager.cubicBLEDevice.setNotification(UUIDS.SUUID_NOTIFE, UUIDS.CUUID_NOTIFE, true);
+            }
+
+            MyApplication.getInstance().getMainThreadHandler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    BleManager.sendData(STARTMESURE);
+                }
+            }, 1000);
+
+        } else if (RFStarBLEService.ACTION_DATA_AVAILABLE.equals(intent.getAction())) {
+            byte[] data = intent.getByteArrayExtra(RFStarBLEService.EXTRA_DATA);
+            if ( data == null) {
+                return;
+            }
+            DataUtils.showData(data);
+            temp = DataUtils.extrackCount(data[0],data[1]);
+        }
     }
 }

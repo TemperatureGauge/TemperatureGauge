@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_devicelist"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b0000000" >
+
+   <RelativeLayout
+       android:id="@+id/rl_pop"
+        android:layout_width="290dp"
+        android:layout_height="280dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="60dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/pop_devivelist_bg">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="搜索设备"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+
+         <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/black_three" />
+
+        <ListView
+            android:id="@+id/blelist"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:layout_below="@+id/line1"
+            android:layout_centerHorizontal="true"
+            android:cacheColorHint="#000000"
+            android:divider="@color/white"
+            android:dividerHeight="0dp"
+            android:listSelector="#00000000" >
+        </ListView>
+
+	<View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/bt_link"
+            android:background="@color/black_three"
+            android:layout_marginTop="20dp" />
+        <Button
+            android:id="@+id/bt_link"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/blelist"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/pop_devicelist_button1"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="连接"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_below="@+id/bt_link"
+            android:layout_centerHorizontal="true"
+            android:background="@color/black_three"
+            android:layout_marginTop="20dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -46,11 +46,11 @@ public class DataUtils {
 
 	public static byte[] getDataToSend(byte fc_b1, byte fc_b2, byte fc_b3,
 			byte fc_b4, byte fc_b5, byte fc_b6) {
-		byte[] bytetosum = { (byte) 0xA8,  fc_b1, fc_b2, fc_b3,
+		byte[] bytetosum = { (byte) 0xcc,  fc_b1, fc_b2, fc_b3,
 				fc_b4, fc_b5, fc_b6, (byte) 0x00, (byte) 0x00, (byte) 0x00,
 				(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
 				(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 , (byte) 0x00 };
-		byte[] bytetoSend = { (byte) 0xA8, fc_b1, fc_b2, fc_b3,
+		byte[] bytetoSend = { (byte) 0xcc, fc_b1, fc_b2, fc_b3,
 				fc_b4, fc_b5, fc_b6, (byte) 0x00, (byte) 0x00, (byte) 0x00,
 				(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
 				(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,(byte) 0x00,
